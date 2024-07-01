@@ -1,0 +1,33 @@
+using System;
+using System.IO;
+
+class Program
+{
+    static void Main()
+    {
+        Console.WriteLine("Digite o caminho do arquivo de texto:");
+        string caminhoArquivo = Console.ReadLine();
+
+        try
+        {
+            string[] linhas = File.ReadAllLines(caminhoArquivo);
+            int contadorLinhas = 0;
+
+            foreach (string linha in linhas)
+            {
+                Console.WriteLine(linha);
+                contadorLinhas++;
+            }
+
+            Console.WriteLine($"Quantidade de linhas no arquivo: {contadorLinhas}");
+        }
+        catch (FileNotFoundException)
+        {
+            Console.WriteLine("Arquivo não encontrado. Verifique o caminho e tente novamente.");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"Ocorreu um erro: {e.Message}");
+        }
+    }
+}
