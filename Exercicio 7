@@ -1,0 +1,51 @@
+using System;
+using System.IO;
+
+class Program
+{
+    static void Main()
+    {
+        Console.Write("Quantidade de letras a inserir: ");
+        int n = int.Parse(Console.ReadLine());
+
+        // Abrir ou criar o arquivo texto para escrita
+        using (StreamWriter sw = new StreamWriter("letras.txt"))
+        {
+            Console.WriteLine($"Digite {n} letras:");
+
+            // Ler as letras do usuário e escrever no arquivo
+            for (int i = 0; i < n; i++)
+            {
+                char letra = char.ToLower(Console.ReadKey().KeyChar); // ler letra em minúsculo
+                sw.Write(letra);
+            }
+        }
+
+        Console.WriteLine("\n\nLetras gravadas no arquivo!");
+
+        // Ler o arquivo para contar as vogais
+        using (StreamReader sr = new StreamReader("letras.txt"))
+        {
+            string letras = sr.ReadToEnd();
+            int contadorVogais = ContarVogais(letras);
+
+            Console.WriteLine($"\nQuantidade de vogais encontradas: {contadorVogais}");
+        }
+
+        Console.ReadLine();
+    }
+
+    // Função para contar as vogais em uma string
+    static int ContarVogais(string texto)
+    {
+        int contador = 0;
+        foreach (char c in texto)
+        {
+            if (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u')
+            {
+                contador++;
+            }
+        }
+        return contador;
+    }
+}
