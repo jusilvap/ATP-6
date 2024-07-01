@@ -1,0 +1,121 @@
+Parete 1 ( Armazenar dos alunos em um arquivo ) 
+
+using System;
+using System.Collections.Generic;
+using System.IO;
+
+class Program
+{
+    static void Main()
+    {
+        List<Aluno> alunos = new List<Aluno>();
+
+        // Simulação de entrada de dados de vários alunos
+        alunos.Add(new Aluno("123", "9999-8888"));
+        alunos.Add(new Aluno("456", "7777-6666"));
+        alunos.Add(new Aluno("789", "5555-4444"));
+
+        // Nome do arquivo onde os dados serão armazenados
+        string nomeArquivo = "dados_alunos.txt";
+
+        // Escrever os dados no arquivo
+        EscreverDadosAlunos(alunos, nomeArquivo);
+
+        Console.WriteLine("Dados dos alunos foram armazenados no arquivo.");
+
+        Console.ReadLine(); // Espera a entrada do usuário para continuar
+    }
+
+    static void EscreverDadosAlunos(List<Aluno> alunos, string nomeArquivo)
+    {
+        using (StreamWriter writer = new StreamWriter(nomeArquivo))
+        {
+            foreach (Aluno aluno in alunos)
+            {
+                writer.WriteLine($"{aluno.Matricula},{aluno.Telefone}");
+            }
+        }
+    }
+}
+
+class Aluno
+{
+    public string Matricula { get; set; }
+    public string Telefone { get; set; }
+
+    public Aluno(string matricula, string telefone)
+    {
+        Matricula = matricula;
+        Telefone = telefone;
+    }
+}
+
+
+Parte 2 ( Ler dados dos alunos de um arquivo ) 
+
+using System;
+using System.Collections.Generic;
+using System.IO;
+
+class Program
+{
+    static void Main()
+    {
+        // Nome do arquivo onde os dados dos alunos estão armazenados
+        string nomeArquivo = "dados_alunos.txt";
+
+        // Ler os dados do arquivo
+        List<Aluno> alunos = LerDadosAlunos(nomeArquivo);
+
+        // Exibir os dados lidos
+        foreach (Aluno aluno in alunos)
+        {
+            Console.WriteLine($"Matrícula: {aluno.Matricula}, Telefone: {aluno.Telefone}");
+        }
+
+        Console.ReadLine(); // Espera a entrada do usuário para continuar
+    }
+
+    static List<Aluno> LerDadosAlunos(string nomeArquivo)
+    {
+        List<Aluno> alunos = new List<Aluno>();
+
+        try
+        {
+            using (StreamReader reader = new StreamReader(nomeArquivo))
+            {
+                string linha;
+                while ((linha = reader.ReadLine()) != null)
+                {
+                    string[] dados = linha.Split(',');
+                    string matricula = dados[0];
+                    string telefone = dados[1];
+                    alunos.Add(new Aluno(matricula, telefone));
+                }
+            }
+        }
+        catch (FileNotFoundException)
+        {
+            Console.WriteLine($"O arquivo '{nomeArquivo}' não foi encontrado.");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Ocorreu um erro ao ler o arquivo: {ex.Message}");
+        }
+
+        return alunos;
+    }
+}
+
+class Aluno
+{
+    public string Matricula { get; set; }
+    public string Telefone { get; set; }
+
+    public Aluno(string matricula, string telefone)
+    {
+        Matricula = matricula;
+        Telefone = telefone;
+    }
+}
+
