@@ -1,0 +1,57 @@
+using System;
+using System.IO;
+using System.Linq;
+
+class Program
+{
+    static void Main()
+    {
+        string filePath = "caminho_do_seu_arquivo.txt"; // Substitua pelo caminho do seu arquivo
+
+        try
+        {
+            // Leitura de todas as linhas do arquivo
+            string[] lines = File.ReadAllLines(filePath);
+
+            // Inicialização de variáveis para máximo, mínimo e soma
+            double max = double.MinValue;
+            double min = double.MaxValue;
+            double sum = 0.0;
+
+            // Iteração sobre cada linha para calcular máximo, mínimo e soma
+            foreach (string line in lines)
+            {
+                if (double.TryParse(line, out double number))
+                {
+                    if (number > max)
+                        max = number;
+
+                    if (number < min)
+                        min = number;
+
+                    sum += number;
+                }
+                else
+                {
+                    Console.WriteLine($"Erro ao converter a linha '{line}' para número.");
+                }
+            }
+
+            // Cálculo da média
+            double average = sum / lines.Length;
+
+            // Impressão dos resultados
+            Console.WriteLine($"Valor máximo: {max}");
+            Console.WriteLine($"Valor mínimo: {min}");
+            Console.WriteLine($"Média: {average}");
+        }
+        catch (IOException e)
+        {
+            Console.WriteLine($"Erro de leitura do arquivo: {e.Message}");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"Ocorreu um erro: {e.Message}");
+        }
+    }
+}
