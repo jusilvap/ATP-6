@@ -1,0 +1,45 @@
+using System;
+using System.IO;
+
+class Program
+{
+    static void Main()
+    {
+        // Entrada de dados
+        Console.Write("Quantidade de veículos: ");
+        int veiculos = int.Parse(Console.ReadLine());
+        Console.Write("Valor do aluguel por veículo: ");
+        double valorAluguel = double.Parse(Console.ReadLine());
+
+        // Cálculo do faturamento mensal e anual
+        double faturamentoMensal = (veiculos * valorAluguel) / 3;
+        double faturamentoAnual = faturamentoMensal * 12;
+
+        // Cálculo do valor ganho com multas no mês
+        double multas = (faturamentoMensal / 10) * 0.2;
+
+        // Cálculo do valor gasto com manutenção anual
+        double valorManutencao = (veiculos * 0.02) * 600;
+
+        // Exibindo os resultados na tela
+        Console.WriteLine("\nResultados:");
+        Console.WriteLine($"Faturamento mensal: R${faturamentoMensal:F2}");
+        Console.WriteLine($"Faturamento anual: R${faturamentoAnual:F2}");
+        Console.WriteLine($"Valor ganho com multas no mês: R${multas:F2}");
+        Console.WriteLine($"Valor gasto com manutenção anual: R${valorManutencao:F2}");
+
+        // Gravando os resultados em um arquivo resultado.txt
+        string path = "resultado.txt";
+        using (StreamWriter sw = File.CreateText(path))
+        {
+            sw.WriteLine($"Faturamento mensal: R${faturamentoMensal:F2}");
+            sw.WriteLine($"Faturamento anual: R${faturamentoAnual:F2}");
+            sw.WriteLine($"Valor ganho com multas no mês: R${multas:F2}");
+            sw.WriteLine($"Valor gasto com manutenção anual: R${valorManutencao:F2}");
+        }
+
+        Console.WriteLine($"\nResultados gravados no arquivo '{path}'.");
+
+        Console.ReadLine();
+    }
+}
