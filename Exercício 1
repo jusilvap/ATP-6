@@ -1,0 +1,22 @@
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        Console.WriteLine("Digite uma frase:");
+        string frase = Console.ReadLine();
+
+        int contadorEspacos = 0;
+
+        foreach (char c in frase)
+        {
+            if (char.IsWhiteSpace(c))
+            {
+                contadorEspacos++;
+            }
+        }
+
+        Console.WriteLine($"Número de espaços em branco na frase: {contadorEspacos}");
+    }
+}
